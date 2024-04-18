@@ -20,10 +20,14 @@
     "react": "^18",
     "react-confetti": "^6.1.0",
     "react-dom": "^18",
-    "sass": "^1.75.0"
+    "sass": "^1.75.0",
+    "touch-cli": "^0.0.1"
   },
   "devDependencies": {
+    "@types/node": "20.12.7",
+    "@types/react": "^18.2.79",
     "eslint": "^8",
-    "eslint-config-next": "14.2.1"
+    "eslint-config-next": "14.2.1",
+    "typescript": "^5.4.5"
   }
 }
