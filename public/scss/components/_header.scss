@@ -1,0 +1,74 @@
+header{
+    background-color: $primary;
+    border-bottom: 1px solid #eae2d6;
+    .inner{
+        // max-width: 1440px;
+        margin: 0 auto;
+        padding: 26px 32px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        @media (max-width: 767px){
+            padding: 20px;
+            flex-direction: column;
+        }
+
+        .user-data{
+            .name-step2{
+                display: none;
+            }
+            .address{  
+                font-size: 16px;
+                line-height: 1.5;   
+                font-weight: 600;
+                @media (max-width: 767px) {
+                    font-size: 16px;    
+                }
+            }
+            .creds{
+                .name{
+                    font-weight: 400;
+                    font-size: 14px;
+                    line-height: 1.5;
+                    @media (max-width: 767px) {
+                        font-size: 12px;    
+                    }
+                }
+                .email{
+                    font-size: 14px;
+                    line-height: 1.5;
+                    color: $lightgray;
+                    @media (max-width: 767px) {
+                        font-size: 12px;    
+                    }
+                }
+            }
+        }
+    }
+}
+
+.logos{
+    display: flex;
+    align-items: center;
+    grid-gap:30px;
+    img{
+        height: auto;
+    }
+    .lev-logo{
+        width: 93px;
+    }
+    .appfolio-logo{
+        width: 81px;
+    }
+    @media (max-width: 767px) {
+        align-self: center;
+        margin-bottom: 20px;
+        grid-gap: 10px;
+        .lev-logo{
+            width: 70px;
+        }
+        .appfolio-logo{
+            width: 40px;
+        }
+    }
+}
