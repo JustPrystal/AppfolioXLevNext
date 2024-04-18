@@ -6,9 +6,10 @@ import {
   OutlinedInput,
   Typography,
 } from "@mui/material";
-import callImage from "../assets/Lev_Illustration_Borrower 1.png";
+import Image from 'next/image';
+import callImage from "/public/images/Lev_Illustration.png";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import CallIcon from "../assets/CallIcon.svg";
+import CallIcon from "/public/images/CallIcon.svg";
 import { useState } from "react";
 import { useTheme } from '@mui/material/styles';
 import { useFormData } from "./store/provider";
@@ -111,7 +112,7 @@ function CallScheduler({ send, data, updateStep, step }) {
               fontSize: "36px",
             }}
           >
-            Let's schedule a call, {user.firstName}
+            Let&apos;s schedule a call, {user.firstName}
           </Typography>
           <Typography
             sx={{
@@ -122,7 +123,7 @@ function CallScheduler({ send, data, updateStep, step }) {
             }}
           >
             {" "}
-            We'll be in touch within one business day
+            We&apos;ll be in touch within one business day
           </Typography>
           <FormControl sx={{ width: "320px" }} >
             <OutlinedInput
@@ -146,7 +147,7 @@ function CallScheduler({ send, data, updateStep, step }) {
               }}
               startAdornment={
                 <InputAdornment position="start">
-                  <img src={CallIcon} alt="" />
+                  <Image src={CallIcon} alt="" />
                 </InputAdornment>
               }
             />
@@ -184,7 +185,7 @@ function CallScheduler({ send, data, updateStep, step }) {
           </FormControl>
         </Box>
         <Box className="right" >
-          <img src={callImage} alt=""/>
+          <Image src={callImage} alt=""/>
         </Box>
       </Box>
     </Box>
