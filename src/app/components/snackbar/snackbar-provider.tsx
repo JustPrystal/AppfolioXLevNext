@@ -1,19 +1,19 @@
-import { useRef } from 'react';
+import React, { useRef, ReactNode } from 'react';
 import PropTypes from 'prop-types';
 import { closeSnackbar, SnackbarProvider as NotistackProvider } from 'notistack';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-// import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-
+import { SnackbarOrigin } from 'notistack';
 
 import { StyledIcon, StyledNotistack } from './styles';
 
-// ----------------------------------------------------------------------
+interface SnackbarProviderProps {
+  children: ReactNode;
+}
 
-export default function SnackbarProvider({ children }) {
- 
-  const notistackRef = useRef(null);
+export default function SnackbarProvider({ children }: SnackbarProviderProps) {
+  const notistackRef = useRef<any>(null);
 
   return (
     <NotistackProvider
@@ -22,7 +22,7 @@ export default function SnackbarProvider({ children }) {
       preventDuplicate
       autoHideDuration={12000}
       variant="success" // Set default variant
-      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' } as SnackbarOrigin}
       iconVariant={{
         info: (
           <StyledIcon color="info">
@@ -31,7 +31,7 @@ export default function SnackbarProvider({ children }) {
         ),
         success: (
           <StyledIcon color="success">
-            succcess
+            success
           </StyledIcon>
         ),
         warning: (
@@ -41,7 +41,7 @@ export default function SnackbarProvider({ children }) {
         ),
         error: (
           <StyledIcon color="error">
-           <ErrorOutlineIcon></ErrorOutlineIcon>
+           <ErrorOutlineIcon />
           </StyledIcon>
         ),
       }}

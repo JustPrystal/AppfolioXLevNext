@@ -1,8 +1,6 @@
-"use client";
+"use client"
 
 import React from 'react';
-// import ReactDOM from 'react-dom/client';
-// import './index.css';
 import '/public/scss/App.scss';
 import App from './App';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
@@ -12,7 +10,7 @@ import { FormProvider } from './components/store/provider';
 const theme = createTheme({
   palette: {
     background: {
-      primary: '#fbfaf8',
+      default: '#fbfaf8',
     },
     text: {
       primary: '#173A5E',
@@ -21,12 +19,11 @@ const theme = createTheme({
     primary: {
       main: "#003330",
       contrastText: '#ffffff',
-      hover: "#005953",
+
     },
     secondary: {
       main: "#404040",
       contrastText: '#ffffff',
-      hover: "#005953",
     },
     action: {
       active: '#001E3C',
@@ -37,18 +34,16 @@ const theme = createTheme({
   },
 });
 
-
-export default function Home() {
-
+export default function Home(): JSX.Element {
   return (
     <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <SnackbarProvider preventDuplicate>
-        <FormProvider>
-          <App/>
-        </FormProvider>
-      </SnackbarProvider>
-    </ThemeProvider>
-  </React.StrictMode>
+      <ThemeProvider theme={theme}>
+        <SnackbarProvider>
+          <FormProvider>
+            <App/>
+          </FormProvider>
+        </SnackbarProvider>
+      </ThemeProvider>
+    </React.StrictMode>
   );
 }

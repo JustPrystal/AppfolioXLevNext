@@ -1,6 +1,12 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
-const HubspotForm = () => {
+declare global {
+  interface Window {
+      hbspt: any; // Define the type of hbspt here
+  }
+}
+
+const HubspotForm: React.FC = () => {
     useEffect(() => {
         const script = document.createElement('script');
         script.src = 'https://js.hsforms.net/forms/v2.js';
@@ -16,9 +22,10 @@ const HubspotForm = () => {
            }
         });
       }, []);
-  return (
-    <div id="hubspotForm" className="hubspotForm"></div>
-  )
+
+    return (
+        <div id="hubspotForm" className="hubspotForm"></div>
+    );
 }
 
 export default HubspotForm;

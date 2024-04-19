@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -6,21 +7,26 @@ import {
   OutlinedInput,
   Typography,
 } from "@mui/material";
-import Image from 'next/image';
+import Image from "next/image";
 import callImage from "/public/images/Lev_Illustration.png";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import CallIcon from "/public/images/CallIcon.svg";
-import { useState } from "react";
-import { useTheme } from '@mui/material/styles';
+import { useTheme } from "@mui/material/styles";
 import { useFormData } from "./store/provider";
 import { getCookies, handleLead, sendDataToSlackIfChanged } from "./helpers/utils";
 
+interface Props {
+  send: any;
+  data: any;
+  updateStep: (step: number) => void;
+  step: number;
+}
 
-
-function CallScheduler({ send, data, updateStep, step }) {
+function CallScheduler({ send, data, updateStep, step }: Props): JSX.Element {
   const { user } = data;
   const theme = useTheme();
-  const {getLoanTypeData, getAssetTypeData, getRecourseData, getLoanAmountData} = useFormData();
+  const { getLoanTypeData, getAssetTypeData, getRecourseData, getLoanAmountData } =
+    useFormData();
   const loanType = getLoanTypeData();
   const assetType = getAssetTypeData();
   const recourse = getRecourseData();
@@ -31,43 +37,41 @@ function CallScheduler({ send, data, updateStep, step }) {
   Loan Type = ${loanType}, 
   Loan Amount = ${loanAmount}, 
   Recourse = ${recourse}`;
-  
-  const [phoneNum, setPhoneNum] = useState(null);
-  const handleChange = (event) => {
-    let formattedPhoneNumber = event.target.value.replace(/\D/g, '');
+
+  const [phoneNum, setPhoneNum] = useState<string | null>(null);
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    let formattedPhoneNumber = event.target.value.replace(/\D/g, "");
 
     // If the first character is '1', exclude it from formatting
-    if (formattedPhoneNumber.startsWith('1')) {
+    if (formattedPhoneNumber.startsWith("1")) {
       formattedPhoneNumber = formattedPhoneNumber.slice(1);
     }
 
     // Format the phone number according to the desired format
-    let formatted = '';
+    let formatted = "";
     if (formattedPhoneNumber.length > 0) {
-      formatted = '+1 (' + formattedPhoneNumber.substring(0, 3);
+      formatted = "+1 (" + formattedPhoneNumber.substring(0, 3);
       if (formattedPhoneNumber.length > 3) {
-        formatted += ') ' + formattedPhoneNumber.substring(3, 6);
+        formatted += ") " + formattedPhoneNumber.substring(3, 6);
       }
       if (formattedPhoneNumber.length > 6) {
-        formatted += '-' + formattedPhoneNumber.substring(6, 10);
+        formatted += "-" + formattedPhoneNumber.substring(6, 10);
       }
     }
 
     // Update the state with the formatted phone number
     setPhoneNum(formatted);
-    
   };
 
   return (
-    
     <Box
       className="call-scheduler-wrap"
       sx={{
         mt: "66px",
         mx: "20px",
-        '@media(max-width: 767px)':{
-          m: "20px"
-        }
+        "@media(max-width: 767px)": {
+          m: "20px",
+        },
       }}
     >
       <Box
@@ -80,29 +84,33 @@ function CallScheduler({ send, data, updateStep, step }) {
           display: "flex",
           borderRadius: "16px",
           justifyContent: "space-between",
-          '@media(max-width: 767px)':{
+          "@media(max-width: 767px)": {
             flexDirection: "column-reverse",
             gap: "30px",
             alignItems: "center",
-            p: "40px"
-          }
+            p: "40px",
+          },
         }}
       >
         <Box className="left">
-          <Button sx={{
-            fontSize: "14px",
-            lineHeight: "1.43",
-            color: theme.palette.primary,
-            textTransform: "capitalize",
-          }}
+          <Button
+            sx={{
+              fontSize: "14px",
+              lineHeight: "1.43",
+              // color: theme.palette.primary,
+              textTransform: "capitalize",
+            }}
             onClick={() => {
-              updateStep(2)
-            }}>
-            <ArrowForwardIcon sx={{
-              pl:"5px", 
-              width: "23px",
-              transform: "rotate(180deg)"
-              }}/>
+              updateStep(2);
+            }}
+          >
+            <ArrowForwardIcon
+              sx={{
+                pl: "5px",
+                width: "23px",
+                transform: "rotate(180deg)",
+              }}
+            />
             Back
           </Button>
           <Typography
@@ -125,7 +133,7 @@ function CallScheduler({ send, data, updateStep, step }) {
             {" "}
             We&apos;ll be in touch within one business day
           </Typography>
-          <FormControl sx={{ width: "320px" }} >
+          <FormControl sx={{ width: "320px" }}>
             <OutlinedInput
               autoFocus
               value={phoneNum}
@@ -155,23 +163,22 @@ function CallScheduler({ send, data, updateStep, step }) {
               variant="contained"
               onClick={() => {
                 let existingLead = getCookies("leadData");
-                if((phoneNum !== JSON.parse(existingLead).phoneNum)){
-                    const leadIsTrue = handleLead(data, 'hot', {phoneNum});
-                    if (leadIsTrue){
-                        sendDataToSlackIfChanged();
-                    }
+                if (phoneNum !== JSON.parse(existingLead).phoneNum) {
+                  const leadIsTrue = handleLead(data, "hot", { phoneNum });
+                  if (leadIsTrue) {
+                    sendDataToSlackIfChanged();
+                  }
                 }
-                
-                updateStep(4)
+
+                updateStep(4);
               }}
-              disabled={(phoneNum && phoneNum.length === 17) ? false : true}
+              disabled={phoneNum && phoneNum.length === 17 ? false : true}
               sx={{
                 width: "175px",
-                color: theme.palette.primary,
-                borderRadius: "8px", 
+                borderRadius: "8px",
                 maxHeight: "44px",
                 height: "100%",
-                border: `1px solid ${theme.palette.primary}`, 
+                border: `1px solid ${theme.palette.primary}`,
                 fontSize: "16px",
                 lineHeight: "1.4",
                 textTransform: "capitalize",
@@ -180,12 +187,12 @@ function CallScheduler({ send, data, updateStep, step }) {
               }}
             >
               Schedule a call
-              <ArrowForwardIcon sx={{pl:"5px", width: "19px"}}/>
+              <ArrowForwardIcon sx={{ pl: "5px", width: "19px" }} />
             </Button>
           </FormControl>
         </Box>
-        <Box className="right" >
-          <Image src={callImage} alt=""/>
+        <Box className="right">
+          <Image src={callImage} alt="" />
         </Box>
       </Box>
     </Box>

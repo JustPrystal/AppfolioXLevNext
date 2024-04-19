@@ -1,4 +1,9 @@
-export const assetTypes = {
+export interface AssetType {
+    label: string;
+    type: string;
+}
+
+export const assetTypes: Record<string, AssetType> = {
     "land_development": {
         label: 'Land/Development',
         type: 'Land'
@@ -96,7 +101,13 @@ export const assetTypes = {
         type: 'SFR'
     }
 };
-export const loanTypes = {
+
+export interface LoanType {
+    label: string;
+    type: string;
+}
+
+export const loanTypes: Record<string, LoanType> = {
     "permanent-financing": {
         label: 'Permanent Financing',
         type: 'Permanent'
@@ -118,7 +129,13 @@ export const loanTypes = {
         type: 'Construction'
     }
 };
-export const recourses = {
+
+export interface Recourse {
+    label: string;
+    type: string;
+}
+
+export const recourses: Record<string, Recourse> = {
     "personal-recourse": {
         label: 'Personal Recourse',
         type: 'Recourse'
@@ -131,12 +148,17 @@ export const recourses = {
         label: 'No Recourse',
         type: 'Non-recourse'
     }
+};
+
+export interface MockData {
+    name: string;
 }
-export const mockData = [
+
+export const mockData: MockData[] = [
     { name: "Bank" },
-    { name: "Debt Funds" },
+    { name: "Credit Union" },
+    { name: "Debt Fund" },
     { name: "Life Co" },
-    { name: "Credit unions" },
-    { name: "Agencies" },
     { name: "CMBS" },
+    { name: "Agencies" },
 ];

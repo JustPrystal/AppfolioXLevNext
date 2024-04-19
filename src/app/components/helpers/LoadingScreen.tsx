@@ -1,26 +1,27 @@
 import { Box, LinearProgress, Stack } from "@mui/material";
 import Branding from "./Branding";
 
-export default function LoadingScreen() {
+export default function LoadingScreen(): JSX.Element {
   return (
     <Box
       sx={{
         height: "100vh",
         width: "100%",
         backgroundColor: "#fbfaf8",
-        display : "flex",
+        display: "flex",
         alignItems: "center",
       }}
     >
-      <Stack sx={{
-        maxWidth: "400px",
-        width:'100%',
-        margin: "0 auto",
-      }} spacing={8}  >
-        <Branding justifyContent="center" />
-        <>
+      <Stack
+        sx={{
+          maxWidth: "400px",
+          width: '100%',
+          margin: "0 auto",
+        }}
+        spacing={8}
+      >
+        <Branding />
         <LinearProgress />
-        </>
       </Stack>
     </Box>
   );

@@ -1,10 +1,9 @@
 import { MaterialDesignContent } from 'notistack';
-
-import { alpha, styled } from '@mui/material/styles';
+import { alpha, styled, Theme } from '@mui/material/styles';
 
 // ----------------------------------------------------------------------
 
-export const StyledNotistack = styled(MaterialDesignContent)(({ theme }) => {
+export const StyledNotistack = styled(MaterialDesignContent)(({ theme }: { theme: Theme }) => {
   const lightMode = theme.palette.mode === 'light';
 
   return {
@@ -19,21 +18,21 @@ export const StyledNotistack = styled(MaterialDesignContent)(({ theme }) => {
       padding: theme.spacing(0.5, 2, 0.5, 0.5),
       backgroundColor: theme.palette.background.paper,
     },
-    '&.notistack-MuiContent-default': {
+    [`.notistack-MuiContent-default`]: {
       padding: theme.spacing(1, 2, 1, 1),
       color: lightMode ? theme.palette.common.white : theme.palette.grey[800],
       backgroundColor: lightMode ? theme.palette.grey[800] : theme.palette.common.white,
     },
-    // '&.notistack-MuiContent-info': {},
-    // '&.notistack-MuiContent-success': {},
-    // '&.notistack-MuiContent-warning': {},
-    // '&.notistack-MuiContent-error': {},
+    // '.notistack-MuiContent-info': {},
+    // '.notistack-MuiContent-success': {},
+    // '.notistack-MuiContent-warning': {},
+    // '.notistack-MuiContent-error': {},
   };
 });
 
 // ----------------------------------------------------------------------
 
-export const StyledIcon = styled('span')(({ color, theme }) => ({
+export const StyledIcon = styled('span')(({ color, theme }: { color: string; theme: Theme }) => ({
   width: 44,
   height: 44,
   display: 'flex',
