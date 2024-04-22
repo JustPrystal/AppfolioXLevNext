@@ -4,7 +4,7 @@ const axios = require('axios'); // Import Axios
 const cors = require('cors'); // Import the cors middleware
 
 const app = express();
-const PORT = 3001;
+const PORT = process.env.PORT || 3001;
 app.use(express.json());
 app.use(cors()); // Use the cors middleware
 

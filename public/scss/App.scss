@@ -5,7 +5,9 @@
 
 //components
 @import "./components/header";
-
+body{
+    color:#171717;
+}
 .app{
     height: 100vh;
     overflow-x: hidden;
