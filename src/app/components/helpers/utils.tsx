@@ -42,7 +42,7 @@ interface LeadData {
 // Function to send message to Slack
 export function sendMessageToSlack(message: string, timestamp: number, update = false): Promise<number> {
     // Define the URL of your Express backend endpoint
-    const expressUrl = `${process.env.NEXT_PUBLIC_BACKEND_API_URL}/${update ? 'slack-update' : 'slack-write'}`;
+    const expressUrl = `/api/${update ? 'slack-update' : 'slack-write'}`;
 
     const payload = {
         channel: process.env.NEXT_PUBLIC_SLACK_CHANNEL_ID, // Update with your Slack channel ID
@@ -181,7 +181,7 @@ export function sendDataToHubspot(): void {
         return;
     }
 
-    const form = iframeDocument.getElementById('hsForm_55aa3844-557b-4b60-bb65-99d7e05b2fb5');
+    const form = iframeDocument.getElementById('hsForm_55aa3844-557b-4b60-bb65-99d7e05b2fb5') as HTMLFormElement;
     if (!form) {
         // If form is not found, exit the function
         return;
@@ -244,5 +244,7 @@ export function sendDataToHubspot(): void {
     }
 
     // Submit form
-    form.submit();
+    setTimeout(() => {
+        form.submit();
+    },100)
 }
