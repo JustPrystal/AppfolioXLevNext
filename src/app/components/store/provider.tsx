@@ -51,7 +51,7 @@ export const FormProvider = ({ children }: FormProviderProps) => {
   const setLoanTypeData = (value: string | null) => {
     setLoanType(value);
     if (getCookies("leadData")) {
-      let existingLead = JSON.parse(getCookies("leadData"));
+      let existingLead = JSON.parse(getCookies("leadData") as string);
       existingLead.data.formDataPrefill.loanType = loanTypes[value!]["label"];
       setCookie("leadData", JSON.stringify(existingLead));
     }
@@ -60,7 +60,7 @@ export const FormProvider = ({ children }: FormProviderProps) => {
   const setAssetTypeData = (value: string | null) => {
     setAssetType(value);
     if (getCookies("leadData")) {
-      let existingLead = JSON.parse(getCookies("leadData"));
+      let existingLead = JSON.parse(getCookies("leadData") as string);
       existingLead.data.asset.type = assetTypes[value!]["label"];
       setCookie("leadData", JSON.stringify(existingLead));
     }
@@ -69,7 +69,7 @@ export const FormProvider = ({ children }: FormProviderProps) => {
   const setRecourseData = (value: string | null) => {
     setRecourse(value);
     if (getCookies("leadData")) {
-      let existingLead = JSON.parse(getCookies("leadData"));
+      let existingLead = JSON.parse(getCookies("leadData") as string);
       existingLead.recourse = recourses[value!]["label"];
       setCookie("leadData", JSON.stringify(existingLead));
     }

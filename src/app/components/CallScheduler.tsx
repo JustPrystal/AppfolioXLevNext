@@ -163,7 +163,7 @@ function CallScheduler({ send, data, updateStep, step }: Props): JSX.Element {
               variant="contained"
               onClick={() => {
                 let existingLead = getCookies("leadData");
-                if (phoneNum !== JSON.parse(existingLead).phoneNum) {
+                if (phoneNum !== JSON.parse(existingLead ?? "").phoneNum) {
                   const leadIsTrue = handleLead(data, "hot", { phoneNum });
                   if (leadIsTrue) {
                     sendDataToSlackIfChanged();

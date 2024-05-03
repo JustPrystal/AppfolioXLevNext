@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Box, Button, Table, TableBody, TableCell, TableContainer, TableRow, Typography } from "@mui/material";
 import { useTheme } from '@mui/material/styles';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
@@ -226,37 +226,29 @@ function MainTable({ step, updateStep }: MainTableProps): JSX.Element {
                       backgroundColor: "#fbfaf8",
                       borderLeft: "0",
                       borderTop: "0",
-                      borderBottom: index == (Object.entries(mockData).length - 1) && "0",
+                      borderBottom: "0", // Fix: Change false to "0"
                       width: "calc( 100% / 7)",
                       p: "20px 16px",
                       fontWeight: "500",
                       color: "#525252"
                     }} >{row[0]}</TableCell>
-                    {Object.entries(row[1]).map((cell, i) =>
-                      <TableCell key={i} sx={{
-                        border: "1px solid #eee8df",
-                        borderBottom: index == (Object.entries(mockData).length - 1) && "0",
-                        borderRight: i == (Object.entries(row[1]).length - 1) && "0",
-                        width: "calc( 100% / 7)",
-                        fontWeight: "500",
-                        color: "#525252",
-                        p: "16px"
-                      }} align="right">
-                        {cell[1] ? (
-                          cell[1] // Render cell[1] if it exists
-                        ) : (
-                          <Skeleton
-                            animation="wave"
-                            width={(i === 0 || i === 2) ? (Math.random() * 30 + 10) : (Math.random() * 70 + 30)}
-                            height={20}
-                            sx={{
-                              margin: "0 auto",
-                              borderRadius: "7px"
-                            }}
-                          />
-                        )}
+                    {Object.entries(row[1] as { [s: string]: unknown }).map((cell, i) => (
+                      <TableCell
+                        key={i}
+                        sx={{
+                          border: "1px solid #eee8df",
+                          borderBottom: "0",
+                          borderRight: "0", // Fix: Change false to "0"
+                          width: "calc( 100% / 7)",
+                          fontWeight: "500",
+                          color: "#525252",
+                          p: "16px"
+                        }}
+                        align="right"
+                      >
+                        {cell[1] as ReactNode}
                       </TableCell>
-                    )}
+                    ))}
                   </TableRow>
                 )
               })}

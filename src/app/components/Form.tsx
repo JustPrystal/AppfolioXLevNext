@@ -35,9 +35,9 @@ function Form({ data, updateStep, step, toggleDrawer, toggleOverflow }: FormProp
 
   const handleCalculate = () => {
     // conversion for keys to type
-    const localAssetType = assetTypes[assetType]['type'];
-    const localLoanType = loanTypes[loanType]['type'];
-    const localRecourse = recourses[recourse]['type'];
+    const localAssetType = assetType ? assetTypes[assetType]['type'] : null;
+    const localLoanType = loanType ? loanTypes[loanType]['type'] : null;
+    const localRecourse = recourse ? recourses[recourse]['type'] : null;
 
     if (!localAssetType || !localLoanType || !localRecourse) {
       // show error;
@@ -57,32 +57,34 @@ function Form({ data, updateStep, step, toggleDrawer, toggleOverflow }: FormProp
     csvData.forEach(csvRow => {
       Object.entries(csvRow).map(([name, values]) => {
         //max ltv
-        const maxLTV = values['As-Is LTV (Max)'][matchedIndex];
-        //interest rate
-        const interestRateMin = values['Interest Rate (Min)'][matchedIndex];
-        const interestRateMax = values['Interest Rate (Max)'][matchedIndex];
-        const interestOutput = interestRateMax.trim() === interestRateMin.trim() ? interestRateMax : `${interestRateMin} - ${interestRateMax}`;
-        //term
-        const termMin = values['Term (Min)'][matchedIndex];
-        const termMax = values['Term (Max)'][matchedIndex];
-        const termOutput = termMax.trim() === termMin.trim() ? termMax : `${termMin} - ${termMax} yrs`;
-        //interest only
-        const IOMin = values['IO Period (Min)'][matchedIndex];
-        const IOMax = values['IO Period (Max)'][matchedIndex];
-        const IOOutput = IOMax.trim() === IOMin.trim() ? IOMax : `${IOMin} - ${IOMax} yrs`;
-        //Amortization	
-        const amortizationMin = values['Amortization (Min)'][matchedIndex];
-        const amortizationMax = values['Amortization (Max)'][matchedIndex];
-        const amortizationOutput = amortizationMax.trim() === amortizationMin.trim() ? amortizationMax : `${amortizationMin} - ${amortizationMax} yrs`;
-        //prepay
-        const prepay = values['Prepayment Penalty'][matchedIndex];
-
-        formattedData['Max LTV'][name] = maxLTV;
-        formattedData['Rate'][name] = interestOutput;
-        formattedData['Term'][name] = termOutput;
-        formattedData['Interest Only'][name] = IOOutput;
-        formattedData['Amortization'][name] = amortizationOutput;
-        formattedData['Pre Pay'][name] = prepay;
+        if(values){
+            const maxLTV = values['As-Is LTV (Max)'][matchedIndex];
+            //interest rate
+            const interestRateMin = values['Interest Rate (Min)'][matchedIndex];
+            const interestRateMax = values['Interest Rate (Max)'][matchedIndex];
+            const interestOutput = interestRateMax.trim() === interestRateMin.trim() ? interestRateMax : `${interestRateMin} - ${interestRateMax}`;
+            //term
+            const termMin = values['Term (Min)'][matchedIndex];
+            const termMax = values['Term (Max)'][matchedIndex];
+            const termOutput = termMax.trim() === termMin.trim() ? termMax : `${termMin} - ${termMax} yrs`;
+            //interest only
+            const IOMin = values['IO Period (Min)'][matchedIndex];
+            const IOMax = values['IO Period (Max)'][matchedIndex];
+            const IOOutput = IOMax.trim() === IOMin.trim() ? IOMax : `${IOMin} - ${IOMax} yrs`;
+            //Amortization	
+            const amortizationMin = values['Amortization (Min)'][matchedIndex];
+            const amortizationMax = values['Amortization (Max)'][matchedIndex];
+            const amortizationOutput = amortizationMax.trim() === amortizationMin.trim() ? amortizationMax : `${amortizationMin} - ${amortizationMax} yrs`;
+            //prepay
+            const prepay = values['Prepayment Penalty'][matchedIndex];
+    
+            formattedData['Max LTV'][name] = maxLTV;
+            formattedData['Rate'][name] = interestOutput;
+            formattedData['Term'][name] = termOutput;
+            formattedData['Interest Only'][name] = IOOutput;
+            formattedData['Amortization'][name] = amortizationOutput;
+            formattedData['Pre Pay'][name] = prepay;
+        }
       });
     });
 
@@ -111,7 +113,7 @@ function Form({ data, updateStep, step, toggleDrawer, toggleOverflow }: FormProp
           <BasicSelect
             title="Asset Type"
             options={assetTypes}
-            value={assetType}
+            value={assetType ?? ""}
             setValue={(value) => {
               setAssetTypeData(value);
             }}
@@ -119,7 +121,7 @@ function Form({ data, updateStep, step, toggleDrawer, toggleOverflow }: FormProp
           <BasicSelect
             title="Loan Type"
             options={loanTypes}
-            value={loanType}
+            value={loanType ?? ""}
             setValue={(value) => {
               setLoanTypeData(value);
             }}
@@ -231,7 +233,8 @@ function Form({ data, updateStep, step, toggleDrawer, toggleOverflow }: FormProp
           variant="contained"
           onClick={() => {
             let existingLead = getCookies("leadData");
-            if ((recourse !== JSON.parse(existingLead).recourse) ||
+            if(existingLead){
+              if ((recourse !== JSON.parse(existingLead).recourse) ||
               (loanAmount !== JSON.parse(existingLead).loanAmount) ||
               (assetType !== JSON.parse(existingLead).data.asset.type) ||
               (loanType !== JSON.parse(existingLead).data.formDataPrefill.loanType)
@@ -240,6 +243,7 @@ function Form({ data, updateStep, step, toggleDrawer, toggleOverflow }: FormProp
               if (leadIsTrue) {
                 sendDataToSlackIfChanged();
               }
+            }
             }
             sendDataToHubspot();
             updateStep(3);

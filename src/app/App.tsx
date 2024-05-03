@@ -38,9 +38,12 @@ function App(): JSX.Element {
 
   const { setLoanTypeData, setAssetTypeData } = useFormData();
 
-  const currentUrl = new URL(window.location.toLocaleString());
-  const urlParams = currentUrl.searchParams;
-  const URLData = urlParams.get('data');
+  let URLData = '';
+  if (typeof window !== 'undefined') {
+    const currentUrl = new URL(window.location.toLocaleString());
+    const urlParams = currentUrl.searchParams;
+    URLData = urlParams.get('data') ?? '';
+  }
 
   const toggleOverflow = () => {
     setOverflow(!overflow);
